@@ -8,18 +8,17 @@ import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.CommandContext
 import net.minestom.server.entity.Player
 
-
-class ShutdownCommand : Command("shutdown", "stop") {
+class StopCommand : Command("shutdown", "stop") {
     init {
-        addSyntax(::execute)
-    }
-
-    private fun execute(sender: CommandSender, context: CommandContext) {
-        if (sender is Player && sender.permissionLevel < 2) {
-            sender.sendMessage(Component.text("You don't have permission to use this command.", NamedTextColor.RED))
-            return
+        setDefaultExecutor { sender, _ ->
+            sender.sendMessage(Component.text("Usage: /shutdown", NamedTextColor.RED))
         }
 
-        MinecraftServer.stopCleanly()
+        setCondition { sender, _ -> sender is Player && sender.permissionLevel >= 2 }
+
+        addSyntax({ _, _ ->
+            MinecraftServer.stopCleanly()
+        })
     }
+
 }

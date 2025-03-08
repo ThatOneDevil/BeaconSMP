@@ -18,17 +18,9 @@ class GiveCommand : Command("give") {
             sender.sendMessage("Usage: /give <player> <item> [count]")
         }
 
-        addSyntax({ sender, context ->
-            if (sender is Player && sender.permissionLevel < 2) {
-                sender.sendMessage(
-                    net.kyori.adventure.text.Component.text(
-                        "You don't have permission to use this command.",
-                        NamedTextColor.RED
-                    )
-                )
-                return@addSyntax
-            }
+        setCondition { sender, _ -> sender is Player && sender.permissionLevel >= 2 }
 
+        addSyntax({ sender, context ->
             val entityFinder: EntityFinder = context["target"]
             var count: Int = context["count"]
             count = min(count.toDouble(), (PlayerInventory.INVENTORY_SIZE * 64).toDouble()).toInt()

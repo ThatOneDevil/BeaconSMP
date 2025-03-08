@@ -41,33 +41,21 @@ class GamemodeCommands : Command("gamemode") {
         setDefaultExecutor { sender, _ ->
             sender.sendMessage("Usage: /gamemode <creative|survival|adventure|spectator>")
         }
+        setCondition { sender, _ -> sender is Player && sender.permissionLevel >= 2 }
 
         addSyntax({ sender, context ->
-            if (sender !is Player) {
-                sender.sendMessage(Component.text("Please run this command in-game.", NamedTextColor.RED))
-                return@addSyntax
-            }
-            if (sender.permissionLevel < 2) {
-                sender.sendMessage(Component.text("You don't have permission to use this command.", NamedTextColor.RED))
-                return@addSyntax
-            }
-
             val mode = context[gamemode]
 
-            executeSelf(sender, mode)
+            executeSelf(sender as Player, mode)
         }, gamemode)
 
         addSyntax({ sender, context ->
-            if (sender is Player && sender.permissionLevel < 2) {
-                sender.sendMessage(Component.text("You don't have permission to use this command.", NamedTextColor.RED))
-                return@addSyntax
-            }
-
             val finder: EntityFinder = context[player]
             val mode = context[gamemode]
 
             executeOthers(sender, mode, finder.find(sender))
         }, gamemode, player)
+
     }
 
     private fun executeSelf(sender: Player, mode: GameMode) {
