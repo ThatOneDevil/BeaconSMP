@@ -48,6 +48,6 @@ class ServerInfoBossBar {
             bossBar.name(text)
             Audiences.players().showBossBar(bossBar)
 
-        }.repeat(20, TimeUnit.SERVER_TICK).schedule()
+        }.repeat(1, TimeUnit.SERVER_TICK).schedule()
     }
 }
