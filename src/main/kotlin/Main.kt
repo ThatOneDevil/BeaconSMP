@@ -7,21 +7,17 @@ import net.minestom.server.instance.block.Block
 
 
 fun main() {
-    // Initialization
     val minecraftServer = MinecraftServer.init()
 
-    // Create the instance
     val instanceManager = MinecraftServer.getInstanceManager()
     val instanceContainer = instanceManager.createInstanceContainer()
 
-    // Set the ChunkGenerator
     instanceContainer.setGenerator { unit ->
         unit.modifier().fillHeight(0, 40, Block.GRASS_BLOCK)
     }
 
     instanceContainer.setChunkSupplier(::LightingChunk)
 
-    // Add an event callback to specify the spawning instance (and the spawn position)
     val globalEventHandler = MinecraftServer.getGlobalEventHandler()
     globalEventHandler.addListener(AsyncPlayerConfigurationEvent::class.java) { event ->
         val player = event.player
@@ -32,6 +28,8 @@ fun main() {
     }
 
     ServerInfoBossBar()
+
+
     minecraftServer.start("0.0.0.0", 25565)
 
 }

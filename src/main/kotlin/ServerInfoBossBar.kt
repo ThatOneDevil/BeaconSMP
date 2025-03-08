@@ -15,9 +15,9 @@ import java.util.function.BiFunction
 
 class ServerInfoBossBar {
 
-    private var DEMO_NODE = EventNode.all("serverInfo")
+    private val DEMO_NODE = EventNode.all("serverInfo")
     private val LAST_TICK = AtomicReference<TickMonitor>()
-    private val bossBar: BossBar // Store a single instance of the BossBar
+    private var bossBar: BossBar
 
     init {
         val eventHandler = MinecraftServer.getGlobalEventHandler()
@@ -34,17 +34,18 @@ class ServerInfoBossBar {
 
         bossBar = BossBar.bossBar(Component.text("Initializing..."), 0f, BossBar.Color.BLUE, BossBar.Overlay.PROGRESS)
 
+
         MinecraftServer.getSchedulerManager().buildTask {
             val ramUsage: Long = (benchmarkManager.getUsedMemory() / 1e6).toLong()
             val tickMonitor = LAST_TICK.get()
 
-            if (tickMonitor != null) {
+            if (tickMonitor != null || MinecraftServer.getConnectionManager().onlinePlayerCount == 0) {
                 val text = Component.text("RAM USAGE: ", NamedTextColor.GRAY)
                     .append(Component.text("$ramUsage MB", NamedTextColor.WHITE))
                     .append(Component.text(" | ", NamedTextColor.DARK_GRAY))
                     .append(Component.text("TICK TIME: ", NamedTextColor.GRAY))
                     .append(Component.text("${MathUtils.round(tickMonitor.tickTime, 2)} ms", NamedTextColor.WHITE))
-                bossBar.name(text) // Update text instead of creating a new BossBar
+                bossBar.name(text)
                 Audiences.players().showBossBar(bossBar)
             }
         }.repeat(20, TimeUnit.SERVER_TICK).schedule()
