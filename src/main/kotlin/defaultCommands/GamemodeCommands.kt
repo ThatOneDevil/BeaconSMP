@@ -15,7 +15,6 @@ import net.minestom.server.entity.GameMode
 import net.minestom.server.entity.Player
 import net.minestom.server.utils.entity.EntityFinder
 
-
 class GamemodeCommands : Command("gamemode") {
     init {
         val gamemode = ArgumentType.Enum("gamemode", GameMode::class.java).setFormat(ArgumentEnum.Format.LOWER_CASED)

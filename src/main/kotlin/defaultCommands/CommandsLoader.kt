@@ -7,5 +7,7 @@ class CommandsLoader {
     init {
         val commandManager = MinecraftServer.getCommandManager()
         commandManager.register(GamemodeCommands())
+        commandManager.register(GiveCommand())
+        commandManager.register(ShutdownCommand())
     }
 }
