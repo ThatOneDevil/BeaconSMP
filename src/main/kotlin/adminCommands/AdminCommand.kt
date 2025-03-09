@@ -16,4 +16,4 @@ open class AdminCommand(name: String, vararg aliases: String?) : Command(name, *
         }
     }
 
-}=
+}
