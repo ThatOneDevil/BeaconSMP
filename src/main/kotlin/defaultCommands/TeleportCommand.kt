@@ -10,59 +10,74 @@ import net.minestom.server.command.builder.CommandExecutor
 import net.minestom.server.command.builder.arguments.ArgumentType.Entity
 import net.minestom.server.command.builder.arguments.ArgumentType.RelativeVec3
 import net.minestom.server.coordinate.Pos
-import net.minestom.server.entity.Entity
 import net.minestom.server.entity.Player
 import net.minestom.server.utils.MathUtils
+import net.minestom.server.utils.location.RelativeVec
 
 
 class TeleportCommand : Command("teleport", "tp") {
+    private fun teleportPlayer(sender: Player, target1Name: String, target2Name: String? = null, pos: Pos? = null) {
+        val connectionManager = MinecraftServer.getConnectionManager()
+        val target1Player = connectionManager.getOnlinePlayerByUsername(target1Name)
+
+        if (target2Name != null) {
+            val target2Player = connectionManager.getOnlinePlayerByUsername(target2Name)
+            target1Player?.teleport(target2Player!!.position)
+            sender.sendMessage(Component.text("Teleported $target1Name to $target2Name"))
+        } else if (pos != null) {
+            target1Player?.teleport(pos)
+            sender.sendMessage(Component.text("Teleported $target1Name to ${getPrettyLocation(pos)}"))
+        } else {
+            sender.teleport(target1Player!!.position)
+            sender.sendMessage(Component.text("Teleported to player $target1Name"))
+        }
+    }
+
     init {
         defaultExecutor = CommandExecutor { source: CommandSender, _: CommandContext? ->
             source.sendMessage(
-                Component.text("Usage: /tp <player> [<player>/<x><y><z>] ", NamedTextColor.RED)
+                Component.text("Usage: /tp [<player>/<x><y><z>] [<player>/<x><y><z>] ", NamedTextColor.RED)
             )
         }
 
         setCondition { sender, _ -> sender is Player && sender.permissionLevel >= 2 }
 
         val posArg = RelativeVec3("pos")
-        val player = Entity("player").onlyPlayers(true)
-        val target = Entity("target").onlyPlayers(true)
-
-
-        addSyntax({ sender, context ->
-            sender as Player
-
-            val playerName = context[player].findFirstPlayer(sender)
-            val pl = MinecraftServer.getConnectionManager().getOnlinePlayerByUsername(playerName!!.username)!!
-
-            sender.teleport(pl.position)
-
-            sender.sendMessage(Component.text("Teleported to player ${playerName.username}"))
-        }, player)
-
+        val target1 = Entity("target1").onlyPlayers(true)
+        val target2 = Entity("target2").onlyPlayers(true)
 
         addSyntax({ sender, context ->
             sender as Player
+            val target1Name = context[target1].findFirstPlayer(sender)?.username
 
-            val playerName = context[player].findFirstPlayer(sender)
-            val targetName = context[target].findFirstPlayer(sender)
-            val pl = MinecraftServer.getConnectionManager().getOnlinePlayerByUsername(playerName!!.username)!!
-            val targetPl = MinecraftServer.getConnectionManager().getOnlinePlayerByUsername(targetName!!.username)!!
+            teleportPlayer(sender, target1Name!!)
+        }, target1)
 
-            pl.teleport(targetPl.position)
+        addSyntax({ sender, context ->
+            sender as Player
+            val target1Name = context[target1].findFirstPlayer(sender)?.username
+            val target2Name = context[target2].findFirstPlayer(sender)?.username
 
-            sender.sendMessage(Component.text("Teleported ${targetName.username} to ${playerName.username}"))
+            teleportPlayer(sender, target1Name!!, target2Name)
+        }, target1, target2)
 
-        }, player, target)
+        addSyntax({ sender, context ->
+            sender as Player
+            val relativeVec: RelativeVec = context[posArg]
+            val pos = sender.position.withCoord(relativeVec.from(sender))
 
-    }
+            sender.teleport(pos)
+            sender.sendMessage(Component.text("Teleported to ${getPrettyLocation(pos)}"))
+        }, posArg)
 
-    private fun teleportOthers(sender: Player, targets: List<Entity> , entities: List<Entity>) {
-        for (entity in entities) {
-            sender.teleport(entity.position)
-            sender.sendMessage(Component.text("Teleported ${entities.size} entities to ${getPrettyLocation(entity.position)}"))
-        }
+        addSyntax({ sender, context ->
+            sender as Player
+            val target1Name = context[target1].findFirstPlayer(sender)?.username
+            val relativeVec: RelativeVec = context[posArg]
+            val pos = sender.position.withCoord(relativeVec.from(sender))
+
+            teleportPlayer(sender, target1Name!!, pos = pos)
+        }, target1, posArg)
     }
 
     private fun getPrettyLocation(pos: Pos): String {
