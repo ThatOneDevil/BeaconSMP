@@ -7,7 +7,7 @@ import net.minestom.server.entity.Player
 
 open class AdminCommand(name: String, vararg aliases: String?) : Command(name, *aliases) {
     init {
-        super.setCondition { sender, _ ->
+        this.setCondition { sender, _ ->
             return@setCondition if (sender is Player && sender.permissionLevel > 2) true
             else {
                 sender.sendMessage(Component.text("You do not have permission to use this command", NamedTextColor.RED))
@@ -16,4 +16,4 @@ open class AdminCommand(name: String, vararg aliases: String?) : Command(name, *
         }
     }
 
-}
+}=
