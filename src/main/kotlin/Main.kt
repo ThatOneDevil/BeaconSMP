@@ -1,4 +1,4 @@
-import defaultCommands.CommandsLoader
+import adminCommands.CommandsLoader
 import net.minestom.server.MinecraftServer
 import net.minestom.server.coordinate.Pos
 import net.minestom.server.entity.GameMode

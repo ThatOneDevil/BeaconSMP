@@ -1,10 +1,10 @@
-package defaultCommands
+package adminCommands.commands
 
+import adminCommands.AdminCommand
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.MinecraftServer
 import net.minestom.server.command.CommandSender
-import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.CommandContext
 import net.minestom.server.command.builder.CommandExecutor
 import net.minestom.server.command.builder.arguments.ArgumentType.Entity
@@ -15,7 +15,7 @@ import net.minestom.server.utils.MathUtils
 import net.minestom.server.utils.location.RelativeVec
 
 
-class TeleportCommand : Command("teleport", "tp") {
+class TeleportCommand : AdminCommand("teleport", "tp") {
     private fun teleportPlayer(sender: Player, target1Name: String, target2Name: String? = null, pos: Pos? = null) {
         val connectionManager = MinecraftServer.getConnectionManager()
         val target1Player = connectionManager.getOnlinePlayerByUsername(target1Name)
@@ -39,8 +39,6 @@ class TeleportCommand : Command("teleport", "tp") {
                 Component.text("Usage: /tp [<player>/<x><y><z>] [<player>/<x><y><z>] ", NamedTextColor.RED)
             )
         }
-
-        setCondition { sender, _ -> sender is Player && sender.permissionLevel >= 2 }
 
         val posArg = RelativeVec3("pos")
         val target1 = Entity("target1").onlyPlayers(true)

@@ -1,10 +1,10 @@
-package defaultCommands
+package adminCommands.commands
 
+import adminCommands.AdminCommand
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.command.CommandSender
 import net.minestom.server.command.builder.ArgumentCallback
-import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.CommandContext
 import net.minestom.server.command.builder.CommandExecutor
 import net.minestom.server.command.builder.arguments.ArgumentEnum
@@ -15,7 +15,7 @@ import net.minestom.server.entity.GameMode
 import net.minestom.server.entity.Player
 import net.minestom.server.utils.entity.EntityFinder
 
-class GamemodeCommands : Command("gamemode") {
+class GamemodeCommands : AdminCommand("gamemode", "gm") {
     init {
         val gamemode = ArgumentType.Enum("gamemode", GameMode::class.java).setFormat(ArgumentEnum.Format.LOWER_CASED)
         val player = ArgumentType.Entity("targets").onlyPlayers(true)
@@ -37,11 +37,6 @@ class GamemodeCommands : Command("gamemode") {
                 )
             )
         }
-
-        setDefaultExecutor { sender, _ ->
-            sender.sendMessage("Usage: /gamemode <creative|survival|adventure|spectator>")
-        }
-        setCondition { sender, _ -> sender is Player && sender.permissionLevel >= 2 }
 
         addSyntax({ sender, context ->
             val mode = context[gamemode]
@@ -89,7 +84,13 @@ class GamemodeCommands : Command("gamemode") {
                 val gamemodeComponent: Component = Component.translatable(gamemodeString)
                 val playerName: Component = entity.displayName ?: entity.name
                 entity.sendMessage(Component.translatable("gameMode.changed", gamemodeComponent))
-                sender.sendMessage(Component.translatable("commands.gamemode.success.other", playerName, gamemodeComponent))
+                sender.sendMessage(
+                    Component.translatable(
+                        "commands.gamemode.success.other",
+                        playerName,
+                        gamemodeComponent
+                    )
+                )
             }
         }
     }

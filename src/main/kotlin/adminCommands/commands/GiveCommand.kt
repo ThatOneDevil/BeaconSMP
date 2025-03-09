@@ -1,7 +1,6 @@
-package defaultCommands
+package adminCommands.commands
 
-import net.kyori.adventure.text.format.NamedTextColor
-import net.minestom.server.command.builder.Command
+import adminCommands.AdminCommand
 import net.minestom.server.command.builder.arguments.ArgumentType.*
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.Player
@@ -12,13 +11,11 @@ import net.minestom.server.utils.entity.EntityFinder
 import kotlin.math.min
 
 
-class GiveCommand : Command("give") {
+class GiveCommand : AdminCommand("give") {
     init {
         setDefaultExecutor { sender, _ ->
             sender.sendMessage("Usage: /give <player> <item> [count]")
         }
-
-        setCondition { sender, _ -> sender is Player && sender.permissionLevel >= 2 }
 
         addSyntax({ sender, context ->
             val entityFinder: EntityFinder = context["target"]
