@@ -22,7 +22,10 @@ class OpCommand : AdminCommand("op") {
 
             for (onlinePlayer in MinecraftServer.getConnectionManager().onlinePlayers) {
                 if (onlinePlayer.permissionLevel >= 2) {
-                    onlinePlayer.sendMessage("${player.username} was opped by ${sender.username}")
+                    if (onlinePlayer == player){
+                        continue
+                    }
+                    onlinePlayer.sendMessage("${player.username} was deopped by ${sender.username}")
                 }
             }
         }, target)
@@ -47,6 +50,9 @@ class DeopCommand : Command("deop") {
 
             for (onlinePlayer in MinecraftServer.getConnectionManager().onlinePlayers) {
                 if (onlinePlayer.permissionLevel >= 2) {
+                    if (onlinePlayer == player){
+                        continue
+                    }
                     onlinePlayer.sendMessage("${player.username} was deopped by ${sender.username}")
                 }
             }
