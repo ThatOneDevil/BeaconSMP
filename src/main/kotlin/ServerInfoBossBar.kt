@@ -36,8 +36,8 @@ class ServerInfoBossBar {
 
 
 
-        MinecraftServer.getSchedulerManager().buildTask {
-            val ramUsage: Long = (benchmarkManager.getUsedMemory() / 1e6).toLong()
+        MinecraftServer.getSchedulerManager().buildTask() {
+            val ramUsage: Long = (benchmarkManager.usedMemory / 1e6).toLong()
             val tickMonitor = LAST_TICK.get() ?: return@buildTask
 
             val text = Component.text("RAM USAGE: ", NamedTextColor.GRAY)
