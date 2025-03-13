@@ -1,4 +1,6 @@
-import adminCommands.CommandsLoader
+package adminCommands
+
+import ServerInfoBossBar
 import net.minestom.server.MinecraftServer
 import net.minestom.server.coordinate.Pos
 import net.minestom.server.entity.GameMode
@@ -26,7 +28,7 @@ fun main() {
         player.gameMode = GameMode.CREATIVE
         player.respawnPoint = Pos(0.0, 42.0, 0.0)
         player.permissionLevel = 4
-        
+
     }
 
     ServerInfoBossBar()
