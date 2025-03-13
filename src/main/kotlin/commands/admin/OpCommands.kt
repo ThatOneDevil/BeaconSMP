@@ -1,6 +1,6 @@
-package adminCommands.commands
+package commands.admin
 
-import adminCommands.AdminCommand
+import commands.AdminCommand
 import net.minestom.server.MinecraftServer
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType.Entity

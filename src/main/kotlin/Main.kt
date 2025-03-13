@@ -1,13 +1,17 @@
-import adminCommands.CommandsLoader
+import commands.CommandsLoader
+import events.EventLoader
 import net.minestom.server.MinecraftServer
 import net.minestom.server.coordinate.Pos
 import net.minestom.server.entity.GameMode
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent
 import net.minestom.server.instance.LightingChunk
 import net.minestom.server.instance.block.Block
+import tablist.TabListLoader
+import tablist.TeamTablistManager
 
 
 fun main() {
+
     val minecraftServer = MinecraftServer.init()
 
     val instanceManager = MinecraftServer.getInstanceManager()
@@ -26,12 +30,17 @@ fun main() {
         player.gameMode = GameMode.CREATIVE
         player.respawnPoint = Pos(0.0, 42.0, 0.0)
         player.permissionLevel = 4
-        
+
     }
 
     ServerInfoBossBar()
     CommandsLoader()
+    EventLoader()
+    TabListLoader()
+    TeamTablistManager.setupTeams()
 
     minecraftServer.start("0.0.0.0", 25565)
 
 }
+
+

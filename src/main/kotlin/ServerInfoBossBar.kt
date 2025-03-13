@@ -15,16 +15,13 @@ import java.util.function.BiFunction
 
 class ServerInfoBossBar {
 
-    private val DEMO_NODE = EventNode.all("serverInfo")
+    private val node = EventNode.all("serverInfo")
     private val LAST_TICK = AtomicReference<TickMonitor>()
     private var bossBar: BossBar
 
     init {
         val eventHandler = MinecraftServer.getGlobalEventHandler()
-        eventHandler.addChild(DEMO_NODE)
-
-        MinestomAdventure.AUTOMATIC_COMPONENT_TRANSLATION = true
-        MinestomAdventure.COMPONENT_TRANSLATOR = BiFunction { c: Component?, _: Locale? -> c }
+        eventHandler.addChild(node)
 
         eventHandler.addListener(ServerTickMonitorEvent::class.java) { event ->
             LAST_TICK.set(event.tickMonitor)
@@ -34,9 +31,11 @@ class ServerInfoBossBar {
 
         bossBar = BossBar.bossBar(Component.text("Initializing..."), 0f, BossBar.Color.BLUE, BossBar.Overlay.PROGRESS)
 
-
-
         MinecraftServer.getSchedulerManager().buildTask() {
+            if (MinecraftServer.getConnectionManager().onlinePlayerCount == 0) {
+                return@buildTask
+            }
+
             val ramUsage: Long = (benchmarkManager.usedMemory / 1e6).toLong()
             val tickMonitor = LAST_TICK.get() ?: return@buildTask
 

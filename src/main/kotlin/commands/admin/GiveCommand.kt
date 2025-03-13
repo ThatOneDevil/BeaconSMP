@@ -1,6 +1,6 @@
-package adminCommands.commands
+package commands.admin
 
-import adminCommands.AdminCommand
+import commands.AdminCommand
 import net.minestom.server.command.builder.arguments.ArgumentType.*
 import net.minestom.server.entity.Entity
 import net.minestom.server.entity.Player

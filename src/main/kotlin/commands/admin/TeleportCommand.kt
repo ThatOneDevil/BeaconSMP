@@ -1,6 +1,6 @@
-package adminCommands.commands
+package commands.admin
 
-import adminCommands.AdminCommand
+import commands.AdminCommand
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.MinecraftServer

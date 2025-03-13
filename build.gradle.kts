@@ -12,16 +12,13 @@ repositories {
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
-    // https://mvnrepository.com/artifact/net.minestom/minestom-snapshots
-
-    implementation("net.minestom:minestom-snapshots:1_21-9219e96f76")
+    //implementation("net.minestom:minestom-snapshots:1_21-9219e96f76")
+    implementation("net.minestom:minestom-snapshots:1_21_4-6490538291")
     implementation("org.slf4j:slf4j-simple:2.0.17")
+    implementation("com.google.code.gson:gson:2.12.1")
+
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
 kotlin {
     jvmToolchain(21)
 }
