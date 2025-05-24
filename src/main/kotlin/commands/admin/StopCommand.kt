@@ -12,7 +12,6 @@ class StopCommand : AdminCommand("stop") {
 
         addSyntax({ sender, _ ->
             sender as Player
-            MinecraftServer.getSchedulerManager().shutdown()
             MinecraftServer.stopCleanly()
         })
     }

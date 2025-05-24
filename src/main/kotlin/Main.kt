@@ -4,13 +4,16 @@ import net.minestom.server.MinecraftServer
 import net.minestom.server.coordinate.Pos
 import net.minestom.server.entity.GameMode
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent
+import net.minestom.server.extras.MojangAuth
 import net.minestom.server.instance.InstanceContainer
 import net.minestom.server.instance.LightingChunk
 import net.minestom.server.instance.anvil.AnvilLoader
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
+import net.minestom.server.utils.time.TimeUnit
 import tablist.TabListLoader
 import tablist.TeamTablistManager
+import java.time.Duration
 
 lateinit var instanceContainer: InstanceContainer
 
@@ -19,7 +22,6 @@ fun main() {
     val instanceManager = MinecraftServer.getInstanceManager()
     instanceContainer = instanceManager.createInstanceContainer()
     instanceContainer.chunkLoader = AnvilLoader("worlds/world")
-
 
     instanceContainer.setChunkSupplier(::LightingChunk)
 
@@ -34,11 +36,15 @@ fun main() {
 
     }
 
+    MinecraftServer.getBenchmarkManager().enable(Duration.of(10, TimeUnit.SECOND));
+    MinecraftServer.setBrandName("ThatOneDevil")
+
     ServerInfoBossBar()
     CommandsLoader()
     EventLoader()
     TabListLoader()
     TeamTablistManager.setupTeams()
+    MojangAuth.init();
 
     minecraftServer.start("0.0.0.0", 25565)
 

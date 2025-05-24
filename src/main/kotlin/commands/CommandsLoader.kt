@@ -1,12 +1,24 @@
 package commands
 
 import commands.admin.*
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.TextColor
 import net.minestom.server.MinecraftServer
+
 
 class CommandsLoader {
 
     init {
         val commandManager = MinecraftServer.getCommandManager()
+
+        commandManager.setUnknownCommandCallback { sender, _ ->
+            sender.sendMessage(
+                Component.text(
+                    "Unknown command"
+                ).color(TextColor.color(0xFF6961))
+            )
+        }
+
 
         //admin commands
         commandManager.register(GamemodeCommands())
