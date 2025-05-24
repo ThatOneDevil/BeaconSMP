@@ -6,7 +6,7 @@ import net.minestom.server.event.Event
 import net.minestom.server.event.EventNode
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent
 import net.minestom.server.utils.time.TimeUnit
-import playerdata.PlayerDataManager.getData
+import playerData.PlayerDataManager.getData
 
 
 object PlayerConnectionEvent {

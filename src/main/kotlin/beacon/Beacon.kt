@@ -11,7 +11,7 @@ import net.minestom.server.entity.Player
 import net.minestom.server.entity.metadata.display.AbstractDisplayMeta
 import net.minestom.server.entity.metadata.display.TextDisplayMeta
 import net.minestom.server.instance.Instance
-import playerdata.PlayerDataManager.getData
+import playerData.PlayerDataManager.getData
 
 class Beacon(var player: Player, private var instance: Instance? = player.instance) {
     private var textDisplay: TextDisplay?

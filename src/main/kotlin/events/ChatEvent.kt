@@ -4,7 +4,7 @@ import Utils.toComponent
 import net.minestom.server.event.Event
 import net.minestom.server.event.EventNode
 import net.minestom.server.event.player.PlayerChatEvent
-import playerdata.PlayerDataManager.getDataClass
+import playerData.PlayerDataManager.getDataClass
 
 object ChatEvent {
     var node: EventNode<Event> = EventNode.all("player-events")

@@ -8,8 +8,8 @@ import net.kyori.adventure.text.Component
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.command.builder.suggestion.SuggestionEntry
 import net.minestom.server.entity.Player
-import playerdata.PlayerDataManager
-import playerdata.Ranks
+import playerData.PlayerDataManager
+import playerData.Ranks
 import tablist.TeamTablistManager
 
 class RankCommands : AdminCommand("rank") {

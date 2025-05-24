@@ -2,9 +2,7 @@ package events
 
 import beacon.BeaconPlace
 import net.minestom.server.MinecraftServer
-import net.minestom.server.network.packet.server.ServerPacket.Play
-import playerdata.DataSaveEvents
-import playerdata.PlayerDataManager
+import playerData.DataSaveEvents
 
 class EventLoader {
 

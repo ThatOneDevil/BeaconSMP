@@ -4,7 +4,7 @@ import Utils.toComponent
 import net.minestom.server.MinecraftServer
 import net.minestom.server.entity.Player
 import net.minestom.server.scoreboard.TeamManager
-import playerdata.Ranks
+import playerData.Ranks
 
 object TeamTablistManager {
     private val teamManager: TeamManager = MinecraftServer.getTeamManager()

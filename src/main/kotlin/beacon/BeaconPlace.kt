@@ -6,7 +6,7 @@ import net.minestom.server.event.Event
 import net.minestom.server.event.EventNode
 import net.minestom.server.event.player.PlayerBlockPlaceEvent
 import net.minestom.server.item.Material
-import playerdata.PlayerDataManager.getData
+import playerData.PlayerDataManager.getData
 
 object BeaconPlace {
 

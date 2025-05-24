@@ -43,6 +43,6 @@ bin/
 .DS_Store
 /.idea/vcs.xml
 
-### playerdata ###
-playerdata/
+### playerData ###
 worlds/
+/playerdata/
