@@ -37,7 +37,7 @@ fun main() {
     }
 
     MinecraftServer.getBenchmarkManager().enable(Duration.of(10, TimeUnit.SECOND));
-    MinecraftServer.setBrandName("ThatOneDevil")
+    MinecraftServer.setBrandName("§b§lBeacon§3§lSMP§f")
 
     ServerInfoBossBar()
     CommandsLoader()

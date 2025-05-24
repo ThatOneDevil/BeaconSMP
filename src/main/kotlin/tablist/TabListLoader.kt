@@ -20,7 +20,7 @@ class TabListLoader {
                 return@buildTask
             }
 
-            val header = Component.text("\n       §7Test server        \n")
+            val header = Component.text("\n       §b§lBeacon§3§lSMP§f        \n")
             val footer = Component.text("\n       §7Made in §bMinestom §7by: §bThatOneDevil       \n")
 
             Audiences.players().sendPlayerListHeaderAndFooter(header, footer)
