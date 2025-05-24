@@ -22,24 +22,19 @@ object BeaconPlace {
 
             if (player.itemInMainHand.material() == Material.BEACON) {
                 val blockPos = event.blockPosition
-                val block = Block.AMETHYST_BLOCK
 
-                val tag = Tag.String("beacon")
-                block.withTag(tag, "a")
-                println(block.getTag(tag))
-//                block.setMaterial(Material.BEACON)
+                val tag = Tag.UUID("beacon-owner")
+                val block = Block.BEACON.withTag(tag, player.uuid)
 
                 event.block = block
 
-//                if (player.getData()?.textDisplay != null) {
-//                    player.sendMessage(Component.text("You already have a beacon placed!", TextColor.color(0xFF6961)))
-//                    event.isCancelled = true
-//                    return@addListener
-//                }
+                if (player.getData()?.textDisplay != null) {
+                    player.sendMessage(Component.text("You already have a beacon placed!", TextColor.color(0xFF6961)))
+                    event.isCancelled = true
+                    return@addListener
+                }
 
-
-
-                //Beacon(player).create(blockPos)
+                Beacon(player).create(blockPos)
             }
         }
 
@@ -47,23 +42,19 @@ object BeaconPlace {
             val player = event.player
             val block = event.block
 
-            val tag = Tag.Transient<String>("beacon-owner")
+            val tag = Tag.UUID("beacon-owner")
+            if (block.hasTag(tag)){
+                if (player.uuid != block.getTag(tag)){
+                    player.sendMessage(Component.text("You cannot break this beacon!", TextColor.color(0xFF6961)))
+                    event.isCancelled = true
+                    return@addListener
+                }
 
-            println(block.getTag(tag))
+                val beacon = Beacon(player)
+                beacon.remove()
+                player.sendMessage(Component.text("Beacon removed successfully!", TextColor.color(0x00FF00)))
 
-//            val tag = Tag.UUID("beacon_owner")
-//            if (block.hasTag(tag)){
-//                if (player.uuid != block.getTag(tag)){
-//                    player.sendMessage(Component.text("You cannot break this beacon!", TextColor.color(0xFF6961)))
-//                    event.isCancelled = true
-//                    return@addListener
-//                }
-//
-//                val beacon = Beacon(player)
-//                beacon.remove()
-//                player.sendMessage(Component.text("Beacon removed successfully!", TextColor.color(0x00FF00)))
-//
-//            }
+            }
         }
     }
 
