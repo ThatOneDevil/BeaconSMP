@@ -5,9 +5,9 @@ import net.minestom.server.MinecraftServer
 import net.minestom.server.event.Event
 import net.minestom.server.event.EventNode
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent
+import net.minestom.server.event.player.PlayerDisconnectEvent
 import net.minestom.server.utils.time.TimeUnit
 import playerData.PlayerDataManager.getData
-
 
 object PlayerConnectionEvent {
 
@@ -22,14 +22,13 @@ object PlayerConnectionEvent {
                 val pos = player.getData()?.textDisplay?.position ?: return@buildTask
 
                 Beacon(player, event.spawningInstance).create(pos)
-            }.delay(40, TimeUnit.SERVER_TICK).schedule()
+            }.delay(20, TimeUnit.SERVER_TICK).schedule()
 
         }
 
-        node.addListener(AsyncPlayerConfigurationEvent::class.java) { event ->
+        node.addListener(PlayerDisconnectEvent::class.java) { event ->
             val player = event.player
-
-            Beacon(player, event.spawningInstance).remove()
+            Beacon(player, event.instance).removeEntity()
 
         }
 

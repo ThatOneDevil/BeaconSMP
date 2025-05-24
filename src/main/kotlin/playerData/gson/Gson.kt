@@ -6,7 +6,6 @@ import com.google.gson.GsonBuilder
 import net.minestom.server.coordinate.Point
 import playerData.gson.typeAdapters.PointAdapter
 
-
 object ExclusionStrategy : ExclusionStrategy {
     override fun shouldSkipField(attributes: FieldAttributes) = attributes.getAnnotation(Exclude::class.java) != null
 
@@ -22,5 +21,3 @@ val GSON = GsonBuilder()
     .addSerializationExclusionStrategy(ExclusionStrategy)
     .registerTypeAdapter(Point::class.java, PointAdapter)
     .create()!!
-
-fun Any.toJson(): String = GSON.toJson(this)

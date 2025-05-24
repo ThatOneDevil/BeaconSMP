@@ -1,4 +1,3 @@
-import beacon.BeaconPlace
 import commands.CommandsLoader
 import events.EventLoader
 import net.minestom.server.MinecraftServer
@@ -14,7 +13,6 @@ import tablist.TabListLoader
 import tablist.TeamTablistManager
 
 lateinit var instanceContainer: InstanceContainer
-
 
 fun main() {
     val minecraftServer = MinecraftServer.init()

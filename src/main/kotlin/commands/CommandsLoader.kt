@@ -18,6 +18,8 @@ class CommandsLoader {
         commandManager.register(SaveWorldCommand())
         commandManager.register(StopCommand())
 
+        commandManager.register(Test())
+
         //normal commands
     }
 

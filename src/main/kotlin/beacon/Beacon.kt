@@ -13,6 +13,7 @@ import net.minestom.server.entity.metadata.display.TextDisplayMeta
 import net.minestom.server.instance.Instance
 import playerData.PlayerDataManager.getData
 
+
 class Beacon(var player: Player, private var instance: Instance? = player.instance) {
     private var textDisplay: TextDisplay?
 
@@ -28,12 +29,19 @@ class Beacon(var player: Player, private var instance: Instance? = player.instan
         makeHologram(blockVec)
     }
 
-    fun remove() {
+    fun removeEntity() {
         val data = player.getData() ?: return
         if (data.textDisplay != null) {
-            instance?.getEntityByUuid(data.uuid)?.remove()
+            println("Removed entity with UUID: ${data.textDisplay!!.uuid}")
+            instance?.getEntityByUuid(data.textDisplay!!.uuid)?.remove()
 
         }
+    }
+
+    fun remove(){
+        removeEntity()
+        player.getData()?.textDisplay = null
+
     }
 
     private fun makeHologram(blockVec: Point) {
