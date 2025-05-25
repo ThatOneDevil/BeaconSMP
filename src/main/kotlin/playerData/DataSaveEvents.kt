@@ -22,7 +22,7 @@ object DataSaveEvents {
 
             MinecraftServer.getSchedulerManager().buildTask() {
                 TeamTablistManager.assignPlayerToTeam(player, data.get().rank)
-            }.delay(20, TimeUnit.SERVER_TICK).schedule()
+            }.repeat(5, TimeUnit.SECOND).schedule()
 
         }
 

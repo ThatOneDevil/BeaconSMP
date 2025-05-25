@@ -1,6 +1,7 @@
 package beacon
 
-import net.kyori.adventure.key.Key
+import Utils.noMessage
+import Utils.yesMessage
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextColor
 import net.minestom.server.event.Event
@@ -29,7 +30,7 @@ object BeaconPlace {
                 event.block = block
 
                 if (player.getData()?.textDisplay != null) {
-                    player.sendMessage(Component.text("You already have a beacon placed!", TextColor.color(0xFF6961)))
+                    player.noMessage("You already have a beacon placed!")
                     event.isCancelled = true
                     return@addListener
                 }
@@ -45,14 +46,14 @@ object BeaconPlace {
             val tag = Tag.UUID("beacon-owner")
             if (block.hasTag(tag)){
                 if (player.uuid != block.getTag(tag)){
-                    player.sendMessage(Component.text("You cannot break this beacon!", TextColor.color(0xFF6961)))
+                    player.noMessage("You cannot break this beacon!")
                     event.isCancelled = true
                     return@addListener
                 }
 
                 val beacon = Beacon(player)
                 beacon.remove()
-                player.sendMessage(Component.text("Beacon removed successfully!", TextColor.color(0x00FF00)))
+                player.yesMessage("Beacon removed successfully!")
 
             }
         }

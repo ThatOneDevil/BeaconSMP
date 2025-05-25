@@ -1,5 +1,9 @@
+import net.kyori.adventure.key.Key
+import net.kyori.adventure.sound.Sound
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.TextColor
 import net.kyori.adventure.text.minimessage.MiniMessage
+import net.minestom.server.command.CommandSender
 
 object Utils {
 
@@ -20,6 +24,16 @@ object Utils {
         }
 
         return MiniMessage.miniMessage().deserialize(convertedInput)
+    }
+
+    fun CommandSender.noMessage(message: String){
+        this.sendMessage(message.toComponent().color(TextColor.color(0xFF6961)))
+        this.playSound(Sound.sound(Key.key("minecraft:entity.villager.no"), Sound.Source.PLAYER, 1f, 1f))
+    }
+
+    fun CommandSender.yesMessage(message: String){
+        this.sendMessage(message.toComponent().color(TextColor.color(0x77DD77)))
+        this.playSound(Sound.sound(Key.key("minecraft:entity.experience_orb.pickup"), Sound.Source.PLAYER, 1f, 1f))
     }
 
     /**

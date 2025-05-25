@@ -19,7 +19,6 @@ class CommandsLoader {
             )
         }
 
-
         //admin commands
         commandManager.register(GamemodeCommands())
         commandManager.register(GiveCommand())
