@@ -46,6 +46,7 @@ fun main() {
     TeamTablistManager.setupTeams()
     MojangAuth.init();
 
+
     minecraftServer.start("0.0.0.0", 25565)
 
     MinecraftServer.getSchedulerManager().buildShutdownTask {

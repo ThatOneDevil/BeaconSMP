@@ -4,11 +4,12 @@ import net.minestom.server.entity.Player
 import playerData.gson.GSON
 import java.util.UUID
 import java.util.concurrent.CompletableFuture
+import java.util.concurrent.ConcurrentHashMap
 
 object PlayerDataManager {
 
     private const val PATH = "playerData"
-    private val playerDataMap: HashMap<UUID, PlayerDataClass> = hashMapOf()
+    private val playerDataMap: ConcurrentHashMap<UUID, PlayerDataClass> = ConcurrentHashMap()
 
     fun loadPlayerData(playerData: PlayerDataClass): CompletableFuture<PlayerDataClass> {
         return CompletableFuture.supplyAsync {
@@ -27,18 +28,20 @@ object PlayerDataManager {
         }
     }
 
-
     fun savePlayerData(playerData: PlayerDataClass): CompletableFuture<Void> {
         return CompletableFuture.runAsync {
             createDataFolder()
             val file = java.io.File("$PATH/${playerData.uuid}.json")
             val json = serialize(playerData)
             file.writeText(json)
+            playerDataMap[playerData.uuid] = playerData // Update cache with latest data
         }
     }
 
     fun deletePlayerData(playerData: PlayerDataClass) {
         playerDataMap.remove(playerData.uuid)
+        val file = java.io.File("$PATH/${playerData.uuid}.json")
+        if (file.exists()) file.delete() // Delete file from disk
     }
 
     fun getOrCreatePlayerData(uuid: UUID): PlayerDataClass {

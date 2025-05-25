@@ -5,9 +5,11 @@ import net.minestom.server.MinecraftServer
 import net.minestom.server.entity.Player
 import net.minestom.server.scoreboard.TeamManager
 import playerData.Ranks
+import java.util.*
 
 object TeamTablistManager {
     private val teamManager: TeamManager = MinecraftServer.getTeamManager()
+    private val playerRankCache = mutableMapOf<UUID, Ranks>()
 
     fun setupTeams() {
         Ranks.entries.sortedByDescending { it.weight }.forEach { rank ->
@@ -24,6 +26,10 @@ object TeamTablistManager {
     }
 
     fun assignPlayerToTeam(player: Player, rank: Ranks) {
+        val uuid = player.uuid
+        val cachedRank = playerRankCache[uuid]
+        if (cachedRank == rank) return
+
         val teamName = "%02d_%s".format(99 - rank.weight, rank.name)
         val team = teamManager.getTeam(teamName) ?: return
 
@@ -32,6 +38,8 @@ object TeamTablistManager {
         team.players.add(player)
         player.team = team
         player.displayName = ("${rank.prefix}${player.username}").toComponent()
+
+        playerRankCache[uuid] = rank
     }
 }
 
