@@ -2,15 +2,13 @@ package beacon
 
 import Utils.noMessage
 import Utils.yesMessage
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.TextColor
 import net.minestom.server.event.Event
 import net.minestom.server.event.EventNode
 import net.minestom.server.event.player.PlayerBlockBreakEvent
 import net.minestom.server.event.player.PlayerBlockPlaceEvent
 import net.minestom.server.instance.block.Block
-import net.minestom.server.tag.Tag
 import net.minestom.server.item.Material
+import net.minestom.server.tag.Tag
 import playerData.PlayerDataManager.getData
 
 object BeaconPlace {
@@ -44,8 +42,8 @@ object BeaconPlace {
             val block = event.block
 
             val tag = Tag.UUID("beacon-owner")
-            if (block.hasTag(tag)){
-                if (player.uuid != block.getTag(tag)){
+            if (block.hasTag(tag)) {
+                if (player.uuid != block.getTag(tag)) {
                     player.noMessage("You cannot break this beacon!")
                     event.isCancelled = true
                     return@addListener

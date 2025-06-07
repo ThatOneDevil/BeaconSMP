@@ -1,0 +1,7 @@
+package spawner
+
+class SpawnerEvents {
+
+
+
+}

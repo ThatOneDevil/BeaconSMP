@@ -25,7 +25,7 @@ class Beacon(var player: Player, private var instance: Instance? = player.instan
         return textDisplay
     }
 
-    fun create(blockVec: Point){
+    fun create(blockVec: Point) {
         makeHologram(blockVec)
     }
 
@@ -38,7 +38,7 @@ class Beacon(var player: Player, private var instance: Instance? = player.instan
         }
     }
 
-    fun remove(){
+    fun remove() {
         removeEntity()
         player.getData()?.textDisplay = null
 

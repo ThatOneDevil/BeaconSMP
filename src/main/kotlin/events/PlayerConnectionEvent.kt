@@ -18,7 +18,7 @@ object PlayerConnectionEvent {
             val player = event.player
             event.player.instance
 
-            MinecraftServer.getSchedulerManager().buildTask() {
+            MinecraftServer.getSchedulerManager().buildTask {
                 val pos = player.getData()?.textDisplay?.position ?: return@buildTask
 
                 Beacon(player, event.spawningInstance).create(pos)

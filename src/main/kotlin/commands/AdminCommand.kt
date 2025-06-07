@@ -1,9 +1,8 @@
 package commands
+
 import Utils.noMessage
 import net.minestom.server.command.builder.Command
 import net.minestom.server.entity.Player
-
-
 
 open class AdminCommand(name: String, vararg aliases: String?) : Command(name, *aliases) {
     init {

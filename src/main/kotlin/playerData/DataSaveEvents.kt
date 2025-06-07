@@ -20,7 +20,7 @@ object DataSaveEvents {
             val player = event.player
             val data = loadPlayerData(getOrCreatePlayerData(player.uuid))
 
-            MinecraftServer.getSchedulerManager().buildTask() {
+            MinecraftServer.getSchedulerManager().buildTask {
                 TeamTablistManager.assignPlayerToTeam(player, data.get().rank)
             }.repeat(5, TimeUnit.SECOND).schedule()
 

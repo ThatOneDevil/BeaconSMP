@@ -11,6 +11,8 @@ import net.minestom.server.instance.anvil.AnvilLoader
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import net.minestom.server.utils.time.TimeUnit
+import playerData.PlayerDataManager.getOrCreatePlayerData
+import playerData.PlayerDataManager.savePlayerData
 import tablist.TabListLoader
 import tablist.TeamTablistManager
 import java.time.Duration
@@ -36,23 +38,31 @@ fun main() {
 
     }
 
-    MinecraftServer.getBenchmarkManager().enable(Duration.of(10, TimeUnit.SECOND));
-    MinecraftServer.setBrandName("§b§lBeacon§3§lSMP§f")
+    MinecraftServer.getBenchmarkManager().enable(Duration.of(10, TimeUnit.SECOND))
+    MinecraftServer.setBrandName("§b§lʙᴇᴀᴄᴏɴ§3§lꜱᴍᴘ§f")
 
     ServerInfoBossBar()
     CommandsLoader()
     EventLoader()
     TabListLoader()
     TeamTablistManager.setupTeams()
-    MojangAuth.init();
+    MojangAuth.init()
 
+    MinecraftServer.getSchedulerManager().buildTask {
+        instanceContainer.saveChunksToStorage()
+        println("Saving chunks...")
+        for (player in MinecraftServer.getConnectionManager().onlinePlayers) {
+            savePlayerData(getOrCreatePlayerData(player.uuid))
+        }
+        println("Saving player data...")
+    }.repeat(60, TimeUnit.SECOND).schedule()
 
     minecraftServer.start("0.0.0.0", 25565)
 
     MinecraftServer.getSchedulerManager().buildShutdownTask {
+        MinecraftServer.stopCleanly()
         instanceContainer.saveChunksToStorage()
         println("Saving chunks...")
-        MinecraftServer.stopCleanly()
 
     }
 

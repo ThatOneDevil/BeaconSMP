@@ -12,7 +12,7 @@ class OpCommand : AdminCommand("op") {
             sender.sendMessage("Usage: /op <player>")
         }
 
-        val target = Entity("target1").onlyPlayers(true)
+        val target = Entity("target").onlyPlayers(true)
 
         addSyntax({ sender, context ->
             sender as Player
@@ -22,7 +22,7 @@ class OpCommand : AdminCommand("op") {
 
             for (onlinePlayer in MinecraftServer.getConnectionManager().onlinePlayers) {
                 if (onlinePlayer.permissionLevel >= 2) {
-                    if (onlinePlayer == player){
+                    if (onlinePlayer == player) {
                         continue
                     }
                     onlinePlayer.sendMessage("${player.username} was deopped by ${sender.username}")
@@ -32,15 +32,13 @@ class OpCommand : AdminCommand("op") {
     }
 }
 
-class DeopCommand : Command("deop") {
+class DeopCommand : AdminCommand("deop") {
     init {
         setDefaultExecutor { sender, _ ->
             sender.sendMessage("Usage: /deop <player>")
         }
 
-        setCondition { sender, _ -> sender is Player && sender.permissionLevel >= 2 }
-
-        val target = Entity("target1").onlyPlayers(true)
+        val target = Entity("target").onlyPlayers(true)
 
         addSyntax({ sender, context ->
             sender as Player
@@ -50,7 +48,7 @@ class DeopCommand : Command("deop") {
 
             for (onlinePlayer in MinecraftServer.getConnectionManager().onlinePlayers) {
                 if (onlinePlayer.permissionLevel >= 2) {
-                    if (onlinePlayer == player){
+                    if (onlinePlayer == player) {
                         continue
                     }
                     onlinePlayer.sendMessage("${player.username} was deopped by ${sender.username}")

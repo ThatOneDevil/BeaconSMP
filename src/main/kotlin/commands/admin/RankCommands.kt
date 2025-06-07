@@ -2,9 +2,8 @@ package commands.admin
 
 import Utils.toComponent
 import commands.AdminCommand
-import net.kyori.adventure.text.format.TextColor
 import net.kyori.adventure.text.Component
-
+import net.kyori.adventure.text.format.TextColor
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.command.builder.suggestion.SuggestionEntry
 import net.minestom.server.entity.Player
@@ -41,7 +40,12 @@ class RankCommands : AdminCommand("rank") {
             }
 
             if (commandArg !in suggestions) {
-                sender.sendMessage(Component.text("Invalid argument. Must be one of: $suggestions", TextColor.color(0xFF6961)))
+                sender.sendMessage(
+                    Component.text(
+                        "Invalid argument. Must be one of: $suggestions",
+                        TextColor.color(0xFF6961)
+                    )
+                )
                 return@addSyntax
             }
 

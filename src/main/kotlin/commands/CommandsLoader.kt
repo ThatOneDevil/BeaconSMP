@@ -4,6 +4,7 @@ import commands.admin.*
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextColor
 import net.minestom.server.MinecraftServer
+import spawner.SpawnerCommands
 
 
 class CommandsLoader {
@@ -29,7 +30,11 @@ class CommandsLoader {
         commandManager.register(SaveWorldCommand())
         commandManager.register(StopCommand())
 
+        commandManager.register(SpawnerCommands())
+
         commandManager.register(Test())
+
+
 
         //normal commands
     }

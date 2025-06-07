@@ -21,7 +21,7 @@ class TabListLoader {
         val header = Component.text("\n       §b§lBeacon§3§lSMP§f        \n")
         val footer = Component.text("\n       §7Made in §bMinestom §7by: §bThatOneDevil       \n")
 
-        MinecraftServer.getSchedulerManager().buildTask() {
+        MinecraftServer.getSchedulerManager().buildTask {
             if (MinecraftServer.getConnectionManager().onlinePlayerCount == 0) {
                 return@buildTask
             }

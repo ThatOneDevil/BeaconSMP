@@ -6,7 +6,7 @@ import net.minestom.server.adventure.audience.Audiences
 import net.minestom.server.event.EventNode
 import net.minestom.server.event.server.ServerTickMonitorEvent
 import net.minestom.server.monitoring.TickMonitor
-import net.minestom.server.utils.MathUtils
+import net.minestom.server.utils.MathUtils.round
 import net.minestom.server.utils.time.TimeUnit
 import java.util.concurrent.atomic.AtomicReference
 
@@ -53,7 +53,7 @@ class ServerInfoBossBar {
                     .append(Component.text("$usedRam/$maxRam MB", NamedTextColor.WHITE))
                     .append(Component.text(" | ", NamedTextColor.DARK_GRAY))
                     .append(Component.text("TICK: ", NamedTextColor.GRAY))
-                    .append(Component.text("${MathUtils.round(tickTime, 2)} ms", NamedTextColor.WHITE))
+                    .append(Component.text("${round(tickTime, 2)} ms", NamedTextColor.WHITE))
                     .build()
 
                 bossBar.name(text)
