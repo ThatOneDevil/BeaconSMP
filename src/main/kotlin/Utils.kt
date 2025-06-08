@@ -36,6 +36,13 @@ object Utils {
         this.playSound(Sound.sound(Key.key("minecraft:entity.experience_orb.pickup"), Sound.Source.PLAYER, 1f, 1f))
     }
 
+    fun formatName(name: String): String {
+        val rawName = name.split(":").last().replace("_", " ")
+        return rawName.split(" ").joinToString(" ") { word ->
+            word.replaceFirstChar { it.uppercase() }
+        }
+    }
+
     /**
      * Converts a string to a MiniMessage component.
      *

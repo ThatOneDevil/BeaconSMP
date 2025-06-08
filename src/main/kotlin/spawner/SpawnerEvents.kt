@@ -37,7 +37,7 @@ object SpawnerEvents {
                 val tag = Tag.String("spawnerData")
                 val spawnerData = GSON.fromJson(block.getTag(tag), SpawnerData::class.java)
 
-                val spawnerGui = SpawnerGui().createSpawnerGui(spawnerData)
+                val spawnerGui = SpawnerGui(spawnerData).createSpawnerGui()
                 player.openInventory(spawnerGui)
             }
         }

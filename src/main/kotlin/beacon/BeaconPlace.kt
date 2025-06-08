@@ -34,6 +34,7 @@ object BeaconPlace {
                 }
 
                 Beacon(player).create(blockPos)
+                player.yesMessage("Beacon placed successfully!")
             }
         }
 

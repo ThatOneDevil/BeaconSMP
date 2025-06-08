@@ -1,5 +1,6 @@
 package spawner
 
+import Utils.formatName
 import Utils.toComponent
 import net.kyori.adventure.text.Component
 import net.minestom.server.entity.EntityType
@@ -11,11 +12,12 @@ import playerData.gson.GSON
 
 data class SpawnerData(
     @Exclude var entityID: EntityType,
-    var entityName: String = entityID.entityName(),
-    var drops: MutableList<ItemStack> = mutableListOf(),
+    var entityName: String = formatName(entityID.name()),
+    var drops: MutableList<Material> = Drops.valueOf(entityName.uppercase()).items,
     var spawnCount: Int = 1,
     var spawnDelay: Int = 20,
-    val stackSize: Int = 0
+    val stackSize: Int = 0,
+    val expGain: Double = 0.0,
 ) {
 
     fun spawnerItem(): ItemStack {
@@ -26,23 +28,17 @@ data class SpawnerData(
             .customName("<color:#BFA2DB>${entityName} Spawner".toComponent()) // soft pastel lavender
             .hideExtraTooltip()
             .lore(
-                arrayListOf(
-                    ("<color:#E3DFFF>Right click to open GUI".toComponent()), // pastel white
+                listOf(
+                    ("<color:#E3DFFF>ʀɪɢʜᴛ ᴄʟɪᴄᴋ ᴛᴏ ᴏᴘᴇɴ ɢᴜɪ".toComponent()), // pastel white
                     (Component.empty()),
                     ("<color:#BFA2DB><bold>Spawner Info:").toComponent(), // lavender
                     (" <color:#BFA2DB>▪ <color:#C5FAD5>Entity Type: <color:#FFF5BA>$entityName").toComponent(),
                     (" <color:#BFA2DB>▪ <color:#C5FAD5>Stack Size: <color:#FFF5BA>${this.stackSize}").toComponent(),
                     (" <color:#BFA2DB>▪ <color:#C5FAD5>Spawn Delay: <color:#FFF5BA>${this.spawnDelay} ticks").toComponent(),
-                    (" <color:#BFA2DB>▪ <color:#C5FAD5>Spawn Count: <color:#FFF5BA>${this.spawnCount}").toComponent()
+                    (" <color:#BFA2DB>▪ <color:#C5FAD5>Spawn Count: <color:#FFF5BA>${this.spawnCount}").toComponent(),
+                    (" <color:#BFA2DB>▪ <color:#C5FAD5>Experience Gain: <color:#FFF5BA>${this.expGain}").toComponent()
                 )
             ).build().withTag(tag, spawnerData)
     }
 
-}
-
-private fun EntityType.entityName(): String {
-    val rawName = this.name().split(":").last().replace("_", " ")
-    return rawName.split(" ").joinToString(" ") { word ->
-        word.replaceFirstChar { it.uppercase() }
-    }
 }
