@@ -5,9 +5,13 @@ import net.kyori.adventure.text.Component
 import net.minestom.server.entity.EntityType
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
+import net.minestom.server.tag.Tag
+import playerData.gson.Exclude
+import playerData.gson.GSON
 
 data class SpawnerData(
-    var entityID: EntityType,
+    @Exclude var entityID: EntityType,
+    var entityName: String = entityID.entityName(),
     var drops: MutableList<ItemStack> = mutableListOf(),
     var spawnCount: Int = 1,
     var spawnDelay: Int = 20,
@@ -15,12 +19,14 @@ data class SpawnerData(
 ) {
 
     fun spawnerItem(): ItemStack {
-        val entityName = this.entityID.name().split(":").last().replace("_", " ")
+        val tag = Tag.String("spawnerData")
+        val spawnerData = GSON.toJson(this)
+
         return ItemStack.builder(Material.SPAWNER)
-            .customName("<color:#BFA2DB>&l${entityName} Spawner".toComponent()) // soft pastel lavender
+            .customName("<color:#BFA2DB>${entityName} Spawner".toComponent()) // soft pastel lavender
             .hideExtraTooltip()
             .lore(
-                listOf(
+                arrayListOf(
                     ("<color:#E3DFFF>Right click to open GUI".toComponent()), // pastel white
                     (Component.empty()),
                     ("<color:#BFA2DB><bold>Spawner Info:").toComponent(), // lavender
@@ -29,9 +35,14 @@ data class SpawnerData(
                     (" <color:#BFA2DB>▪ <color:#C5FAD5>Spawn Delay: <color:#FFF5BA>${this.spawnDelay} ticks").toComponent(),
                     (" <color:#BFA2DB>▪ <color:#C5FAD5>Spawn Count: <color:#FFF5BA>${this.spawnCount}").toComponent()
                 )
-            )
-            .build()
+            ).build().withTag(tag, spawnerData)
     }
 
+}
 
+private fun EntityType.entityName(): String {
+    val rawName = this.name().split(":").last().replace("_", " ")
+    return rawName.split(" ").joinToString(" ") { word ->
+        word.replaceFirstChar { it.uppercase() }
+    }
 }

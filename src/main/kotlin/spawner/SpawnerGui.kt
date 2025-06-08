@@ -11,7 +11,7 @@ class SpawnerGui {
     private val inventoryFiller = ItemStack.builder(Material.GRAY_STAINED_GLASS_PANE).customName(Component.empty()).build()
 
     fun createSpawnerGui(spawnerData: SpawnerData): Inventory {
-        val inventory = Inventory(InventoryType.CHEST_6_ROW, ("<color:C3B1E1>${spawnerData.entityID?.name()}&f Gui").toComponent())
+        val inventory = Inventory(InventoryType.CHEST_6_ROW, ("<color:#854ebb>&l${spawnerData.entityName} Gui").toComponent())
 
         // numbers from 0-8,9,17,18,26,27,35,36,44,45-53
         for (i in 0..53) {

@@ -17,17 +17,19 @@ class SpawnerCommands : AdminCommand("spawner") {
         setCondition { sender, _ -> sender is Player && sender.permissionLevel >= 2 }
 
         val target = Entity("target").onlyPlayers(true)
-        val entityTypeArg = ArgumentType.String("entityType")
+        val entityTypeArg = ArgumentType.StringArray("entityType")
 
         val entityTypeValues = EntityType.values().map { it.name() }
         entityTypeArg.setSuggestionCallback { _, _, suggestion ->
-            entityTypeValues.forEach { suggestion.addEntry(SuggestionEntry(it)) }
+            entityTypeValues.forEach { type ->
+                suggestion.addEntry(SuggestionEntry(type))
+            }
         }
-
 
         addSyntax({ sender, context ->
             sender as Player
-            val type = EntityType.fromKey(context[entityTypeArg].toString())
+            val type = EntityType.fromKey(context[entityTypeArg][0].toString())
+
             val targetPlayer = context[target].findFirstPlayer(sender)
 
             targetPlayer?.inventory?.addItemStack(SpawnerData(type).spawnerItem())

@@ -42,7 +42,7 @@ object Utils {
      * @return A miniMessage component
      */
     fun String.toComponent(): Component {
-        return convertLegacyToMiniMessage(this)
+        return convertLegacyToMiniMessage("<!italic>$this")
     }
 
     /**

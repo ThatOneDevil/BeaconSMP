@@ -3,6 +3,7 @@ package events
 import beacon.BeaconPlace
 import net.minestom.server.MinecraftServer
 import playerData.DataSaveEvents
+import spawner.SpawnerEvents
 
 class EventLoader {
 
@@ -15,5 +16,8 @@ class EventLoader {
 
         // Registering beacon events#
         eventHandler.addChild(BeaconPlace.node)
+
+        // Registering spawner events
+        eventHandler.addChild(SpawnerEvents.node)
     }
 }

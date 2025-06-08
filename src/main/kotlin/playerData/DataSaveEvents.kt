@@ -18,11 +18,7 @@ object DataSaveEvents {
     init {
         node.addListener(AsyncPlayerConfigurationEvent::class.java) { event ->
             val player = event.player
-            val data = loadPlayerData(getOrCreatePlayerData(player.uuid))
-
-            MinecraftServer.getSchedulerManager().buildTask {
-                TeamTablistManager.assignPlayerToTeam(player, data.get().rank)
-            }.repeat(5, TimeUnit.SECOND).schedule()
+            loadPlayerData(getOrCreatePlayerData(player.uuid))
 
         }
 
