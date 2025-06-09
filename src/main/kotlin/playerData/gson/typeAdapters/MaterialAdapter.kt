@@ -1,8 +1,6 @@
 package playerData.gson.typeAdapters
 
 import com.google.gson.*
-import net.minestom.server.coordinate.Point
-import net.minestom.server.coordinate.Vec
 import net.minestom.server.item.Material
 import java.lang.reflect.Type
 

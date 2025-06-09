@@ -6,7 +6,6 @@ import net.minestom.server.entity.Player
 
 open class AdminCommand(name: String, vararg aliases: String?) : Command(name, *aliases) {
     init {
-
         this.setCondition { sender, _ ->
             return@setCondition if (sender is Player && sender.permissionLevel > 2) true
             else {
@@ -15,6 +14,5 @@ open class AdminCommand(name: String, vararg aliases: String?) : Command(name, *
             }
         }
     }
-
 
 }

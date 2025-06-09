@@ -38,7 +38,7 @@ class SpawnerGui(private var spawnerData: SpawnerData) {
             "<color:#B5EAD7><bold>Spawner Storage:".toComponent(),
         ))
 
-        val formatDrops = spawnerDrops.map { itemStack ->
+        val formatDrops = spawnerDrops.items.map { itemStack ->
             " <color:#FFDAC1>▪ <color:#C7CEEA>${formatName(itemStack.name())} 0".toComponent()
         }
         lore.addAll(formatDrops)
@@ -47,7 +47,6 @@ class SpawnerGui(private var spawnerData: SpawnerData) {
             .withCustomName("<color:#FFB7B2>Spawner Storage".toComponent())
             .withLore(lore)
     }
-
 
     private fun registerEventNodes(inventory: Inventory) {
         val node = EventNode.type("spawner-inventory", EventFilter.INVENTORY) { _, inv -> inventory == inv }

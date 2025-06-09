@@ -32,7 +32,7 @@ class SpawnerCommands : AdminCommand("spawner") {
 
             val targetPlayer = context[target].findFirstPlayer(sender)
 
-            targetPlayer?.inventory?.addItemStack(SpawnerData(type).spawnerItem())
+            targetPlayer?.inventory?.addItemStack(SpawnerData(type, targetPlayer.uuid).spawnerItem())
         }, target, entityTypeArg)
     }
 }

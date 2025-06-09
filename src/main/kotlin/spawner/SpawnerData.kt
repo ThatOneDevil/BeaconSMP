@@ -3,21 +3,25 @@ package spawner
 import Utils.formatName
 import Utils.toComponent
 import net.kyori.adventure.text.Component
+import net.minestom.server.coordinate.BlockVec
 import net.minestom.server.entity.EntityType
 import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import net.minestom.server.tag.Tag
 import playerData.gson.Exclude
 import playerData.gson.GSON
+import java.util.UUID
 
 data class SpawnerData(
-    @Exclude var entityID: EntityType,
-    var entityName: String = formatName(entityID.name()),
-    var drops: MutableList<Material> = Drops.valueOf(entityName.uppercase()).items,
+    @Exclude var entityID: EntityType?,
+    var player: UUID,
+    var location: BlockVec? = null,
+    var entityName: String = formatName(entityID?.name().toString()),
+    var drops: Drops = Drops.valueOf(entityName.uppercase()),
     var spawnCount: Int = 1,
-    var spawnDelay: Int = 20,
+    var spawnDelay: Long = 20,
     val stackSize: Int = 0,
-    val expGain: Double = 0.0,
+    val expGain: Double = 1.0,
 ) {
 
     fun spawnerItem(): ItemStack {
