@@ -10,7 +10,6 @@ import net.minestom.server.item.ItemStack
 import net.minestom.server.utils.entity.EntityFinder
 import kotlin.math.min
 
-
 class GiveCommand : AdminCommand("give") {
     init {
         setDefaultExecutor { sender, _ ->

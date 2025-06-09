@@ -15,6 +15,7 @@ import net.minestom.server.timer.Task
 import net.minestom.server.utils.time.TimeUnit
 import playerData.PlayerDataManager.getData
 import playerData.gson.GSON
+import playerData.gson.toJson
 import spawner.tick.SpawnerTick
 
 object SpawnerEvents {
@@ -42,7 +43,7 @@ object SpawnerEvents {
             val position = event.blockPosition
             data.location = position
 
-            event.block = Block.SPAWNER.withTag(TAG_SPAWNER_DATA, tag)
+            event.block = Block.SPAWNER.withTag(TAG_SPAWNER_DATA, data.toJson())
 
             val task = MinecraftServer.getSchedulerManager()
                 .buildTask(SpawnerTick(data))

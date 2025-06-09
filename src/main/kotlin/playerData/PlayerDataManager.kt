@@ -2,6 +2,7 @@ package playerData
 
 import net.minestom.server.entity.Player
 import playerData.gson.GSON
+import playerData.gson.toJson
 import java.util.UUID
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentHashMap
@@ -49,7 +50,7 @@ object PlayerDataManager {
     }
 
     private fun serialize(playerData: PlayerDataClass): String {
-        return GSON.toJson(playerData, PlayerDataClass::class.java)
+        return playerData.toJson()
     }
 
     private fun deserialize(json: String): PlayerDataClass {

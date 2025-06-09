@@ -5,7 +5,6 @@ import com.google.gson.FieldAttributes
 import com.google.gson.GsonBuilder
 import net.minestom.server.coordinate.Point
 import net.minestom.server.item.Material
-import playerData.gson.typeAdapters.MaterialAdapter
 import playerData.gson.typeAdapters.PointAdapter
 
 object ExclusionStrategy : ExclusionStrategy {
@@ -22,5 +21,7 @@ val GSON = GsonBuilder()
     .setPrettyPrinting()
     .addSerializationExclusionStrategy(ExclusionStrategy)
     .registerTypeAdapter(Point::class.java, PointAdapter)
-    .registerTypeAdapter(Material::class.java, MaterialAdapter)
     .create()!!
+
+
+fun Any.toJson(): String = GSON.toJson(this, this::class.java)

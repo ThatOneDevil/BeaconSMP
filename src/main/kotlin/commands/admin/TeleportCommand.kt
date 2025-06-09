@@ -12,8 +12,8 @@ import net.minestom.server.command.builder.arguments.ArgumentType.RelativeVec3
 import net.minestom.server.coordinate.Pos
 import net.minestom.server.entity.Player
 import net.minestom.server.utils.MathUtils
+import net.minestom.server.utils.MathUtils.round
 import net.minestom.server.utils.location.RelativeVec
-
 
 class TeleportCommand : AdminCommand("teleport", "tp") {
     private fun teleportPlayer(sender: Player, target1Name: String, target2Name: String? = null, pos: Pos? = null) {
@@ -79,6 +79,6 @@ class TeleportCommand : AdminCommand("teleport", "tp") {
     }
 
     private fun getPrettyLocation(pos: Pos): String {
-        return "X: ${MathUtils.round(pos.x(), 2)} Y: ${MathUtils.round(pos.y(), 2)} Z: ${MathUtils.round(pos.z(), 2)}"
+        return "X: ${round(pos.x(), 2)} Y: ${round(pos.y(), 2)} Z: ${round(pos.z(), 2)}"
     }
 }

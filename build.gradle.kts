@@ -18,7 +18,6 @@ dependencies {
     implementation("com.google.code.gson:gson:2.12.1")
     implementation("net.kyori:adventure-text-minimessage:4.18.0")
 
-
 }
 
 kotlin {
